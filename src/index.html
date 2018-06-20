@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="./css/index.css">
+	<link rel="stylesheet" href="./layui/css/layui.css">
+	<link rel="stylesheet" href="./css/jquery-weui.min.css">
+	<link rel="stylesheet" href="./css/weui.min.css">
+	<title></title>
+</head>
+
+<body>
+	<div class="header">
+		<div class="weui-search-bar" id="searchBar">
+			<form class="weui-search-bar__form">
+				<div class="weui-search-bar__box">
+					<i class="weui-icon-search"></i>
+					<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+					<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+				</div>
+				<label class="weui-search-bar__label" id="searchText">
+      <i class="weui-icon-search"></i>
+      <span>搜索</span>
+    </label>
+			</form>
+			<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+		</div>
+		<div class="wrapper wrapper01" id="retr">
+			<div class="scroller">
+				<ul class="clearfix">
+					<li><a href="javascript:void(0)">金馆长</a></li>
+					<li><a href="javascript:void(0)">张学友</a></li>
+					<li><a href="javascript:void(0)">教皇</a></li>
+					<li><a href="javascript:void(0)">尔康</a></li>
+					<li><a href="javascript:void(0)">兵库北</a></li>
+					<li><a href="javascript:void(0)">doge</a></li>
+					<li><a href="javascript:void(0)">大眼萌</a></li>
+					<li><a href="javascript:void(0)">斯巴达</a></li>
+					<li><a href="javascript:void(0)">单挑</a></li>
+					<li><a href="javascript:void(0)">皮皮虾</a></li>
+					<li><a href="javascript:void(0)">修仙</a></li>
+					<li><a href="javascript:void(0)">黑恶势力</a></li>
+					<li><a href="javascript:void(0)">魔性小人</a></li>
+					<li><a href="javascript:void(0)">枪</a></li>
+					<li><a href="javascript:void(0)">剑</a></li>
+					<li><a href="javascript:void(0)">拉条</a></li>
+					<li><a href="javascript:void(0)">钱</a></li>
+					<li><a href="javascript:void(0)">烟</a></li>
+					<li><a href="javascript:void(0)">证</a></li>
+					<li><a href="javascript:void(0)">饮料</a></li>
+					<li><a href="javascript:void(0)">其他道具</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="space" />
+	<div class="content">
+		<div id="layui-face-container">
+		</div>
+	</div>
+	<script src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/flexible.js"></script>
+	<script type="text/javascript" src="./js/iscroll.js"></script>
+	<script type="text/javascript" src="./js/navbarscroll.js"></script>
+	<script type="text/javascript" src="./layui/layui.js"></script>
+	<script type="text/javascript" src="./js/jquery-weui.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var height = $(".header").outerHeight(true);
+			$(".space").height(height);
+		});
+
+		var key;
+		var option = function() {
+			var flow = layui.flow;
+			flow.load({
+				elem: '#layui-face-container', //流加载容器
+				isLazyimg: true,
+				done: function(page, next) { //加载下一页
+					console.log(page);
+					// zx.requestLocalApi(function (result) {
+					// 	console.log(JSON.stringify(result));
+					// },"https://www.doutula.com/api/search?keyword=金馆长&mime=0&page=2", 0, null);
+					//模拟插入
+					setTimeout(function() {
+						var lis = [];
+						for (var i = 0; i < 6; i++) {
+							var src = "http://s17.mogucdn.com/p2/161011/upload_279h87jbc9l0hkl54djjjh42dc7i1_800x480.jpg?v=' + ((page - 1) * 6 + i + 1) + '";
+							lis.push('<li><img lay-src=' + src + ' onclick="javascript:fun(this.src);"' + '></li>')
+						}
+						next(lis.join(''), page < 50); //假设总页数为 6
+					}, 500);
+				}
+			});
+			//按屏加载图片
+			flow.lazyimg({
+				elem: '#layui-face-container img'
+			});
+		};
+
+		var div = "<div id=\"layui-face-container\"><img lay-src=\"https://gw.alicdn.com/bao/uploaded/i2/701696736/TB2PNl5ahQa61Bjy0FhXXaalFXa_!!701696736.jpg_400x400q90.jpg?t=1529426724564\" onclick=\"javascript:fun(this.src);\"></div>";
+		var index = -1;
+		function navClick(obj) {
+			if (obj.index() != index) {
+				key = obj.text();
+				$("#layui-face-container").html(div);
+				layui.use('flow', option);
+				index = obj.index();
+			}
+		};
+
+		function fun(url) {
+			url = "detail.html?url=" + url;
+			window.location.href = encodeURI(url);
+		}
+
+		$('.wrapper').navbarscroll({
+			endClickScroll: function(obj) {
+				navClick(obj);
+			}
+		});
+	</script>
+</body>
+
+</html>
