@@ -57,7 +57,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="space" />
+	<div class="space"></div>
 	<div class="content">
 		<div id="layui-face-container">
 		</div>
@@ -82,9 +82,9 @@
 				isLazyimg: true,
 				done: function(page, next) { //加载下一页
 					console.log(page);
-					// zx.requestLocalApi(function (result) {
-					// 	console.log(JSON.stringify(result));
-					// },"https://www.doutula.com/api/search?keyword=金馆长&mime=0&page=2", 0, null);
+					zx.requestLocalApi(function (result) {
+						console.log(JSON.stringify(result));
+					},"https://www.doutula.com/api/search?keyword=金馆长&mime=0&page=2", 0, null);
 					//模拟插入
 					setTimeout(function() {
 						var lis = [];
