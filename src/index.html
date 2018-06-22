@@ -7,9 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 	<link rel="stylesheet" href="./css/index.css">
-	<link rel="stylesheet" href="./layui/css/layui.css">
 	<link rel="stylesheet" href="./css/jquery-weui.min.css">
 	<link rel="stylesheet" href="./css/weui.min.css">
+	<link type="text/css" rel="stylesheet" href="./hui/css/hui.css" />
 	<title></title>
 </head>
 
@@ -58,9 +58,17 @@
 	</div>
 </div>
 <div class="space"></div>
-<div class="content">
+<!-- <div class="content">
 	<div id="layui-face-container">
 	</div>
+</div> -->
+<div class="hui-wrap">
+    <div id="refreshContainer" class="hui-refresh">
+        <div class="hui-refresh-icon"></div>
+        <div class="hui-refresh-content hui-list">
+            <ul id="list"></ul>
+        </div>
+    </div>
 </div>
 <script src="./js/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="/zx_local_res/jssdk/cordova.js"></script>
@@ -68,62 +76,65 @@
 <script type="text/javascript" src="./js/flexible.js"></script>
 <script type="text/javascript" src="./js/iscroll.js"></script>
 <script type="text/javascript" src="./js/navbarscroll.js"></script>
-<script type="text/javascript" src="./layui/layui.js"></script>
 <script type="text/javascript" src="./js/jquery-weui.min.js"></script>
+<script type="text/javascript" src="./hui/js/hui.js"></script>
+<script src="./hui/js/hui-refresh-load-more.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 		$(document).ready(function() {
 			var height = $(".header").outerHeight(true);
 			$(".space").height(height);
 		});
 
-		var keyword;
-		var option = function() {
-			var flow = layui.flow;
-			flow.load({
-				elem: '#layui-face-container', //流加载容器
-				isLazyimg: true,
-				done: function(page, next) { //加载下一页
-					var url = "https://www.doutula.com/api/search?mime=0&keyword=" + keyword + "&page=" + page;
-					console.log(url);
-					// zx.requestLocalApi(function (result) {
-					// 	var status = result["status"];//数据状态 1:正常 0:异常
-					// 	var data = result["data"];
-					// 	var list = data["list"];
-					// 	var more = data["more"];//表示下一页是否还有数据，0 就别再请求了。
-					//
-					// 	var lis = [];
-					// 	layui.each(list, function(index, item){
-					// 		var out_id = list[index]["out_id"];
-					// 		var image_url = list[index]["image_url"];
-					// 		lis.push('<li><img lay-src=' + image_url + ' onclick="javascript:fun(this.src);"' + '></li>')
-					// 	});
-					// 	next(lis.join(''), more == 1); //假设总页数为 6
-					// }, url, 0, null);
-					//模拟插入
-					setTimeout(function() {
-						var lis = [];
-						for (var i = 0; i < 6; i++) {
-							var src = "http://s17.mogucdn.com/p2/161011/upload_279h87jbc9l0hkl54djjjh42dc7i1_800x480.jpg?v=' + ((page - 1) * 6 + i + 1) + '";
-							lis.push('<li><img lay-src=' + src + ' onclick="javascript:fun(this.src);"' + '></li>')
-						}
-						next(lis.join(''), page < 50); //假设总页数为 6
-					}, 500);
-				}
-			});
-			//按屏加载图片
-			flow.lazyimg({
-				elem: '#layui-face-container img'
-			});
-		};
+		// var keyword;
+		// var myPage;
+		// var option = function() {
+		// 	var flow = layui.flow;
+		// 	flow.load({
+		// 		elem: '#layui-face-container', //流加载容器
+		// 		isLazyimg: true,
+		// 		done: function(page, next) { //加载下一页
+		// 			var url = "https://www.doutula.com/api/search?mime=0&keyword=" + keyword + "&page=" + page;
+		// 			console.log(url);
+		// 			// zx.requestLocalApi(function (result) {
+		// 			// 	var status = result["status"];//数据状态 1:正常 0:异常
+		// 			// 	var data = result["data"];
+		// 			// 	var list = data["list"];
+		// 			// 	var more = data["more"];//表示下一页是否还有数据，0 就别再请求了。
+		// 			//
+		// 			// 	var lis = [];
+		// 			// 	layui.each(list, function(index, item){
+		// 			// 		var out_id = list[index]["out_id"];
+		// 			// 		var image_url = list[index]["image_url"];
+		// 			// 		lis.push('<li><img lay-src=' + image_url + ' onclick="javascript:fun(this.src);"' + '></li>')
+		// 			// 	});
+		// 			// 	next(lis.join(''), more == 1); //假设总页数为 6
+		// 			// }, url, 0, null);
+		// 			//模拟插入
+		// 			setTimeout(function() {
+		// 				var lis = [];
+		// 				for (var i = 0; i < 6; i++) {
+		// 					var src = "http://s17.mogucdn.com/p2/161011/upload_279h87jbc9l0hkl54djjjh42dc7i1_800x480.jpg?v=' + ((page - 1) * 6 + i + 1) + '";
+		// 					lis.push('<li><img lay-src=' + src + ' onclick="javascript:fun(this.src);"' + '></li>')
+		// 				}
+		// 				next(lis.join(''), page < 50); //假设总页数为 6
+		// 			}, 0);
+		// 		}
+		// 	});
+		// 	//按屏加载图片
+		// 	flow.lazyimg({
+		// 		elem: '#layui-face-container img'
+		// 	});
+		// };
 
 		var div = "<div id=\"layui-face-container\"></div>";
 		var index = -1;
 		function navClick(obj) {
 			if (obj.index() != index) {
 				keyword = obj.text();
-				$("#layui-face-container").children().detach();
-				layui.use('flow', option);
+				$("#list").empty();
+				// layui.use('flow', option);
 				index = obj.index();
+				hui.refresh('#refreshContainer', refresh);
 			}
 		};
 
@@ -137,6 +148,60 @@
 					navClick(obj);
 				}
 		});
+		var page = 1;
+		// hui.refresh('#refreshContainer', refresh);
+		hui.loadMore(getMore);
+		//加载更多
+		function getMore(){
+			console.log("getMore" + page);
+		    hui.get(
+		        'http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=list1&page='+page,
+		        function(res){
+		            //判断加载完毕
+		            if(res == 'null'){
+		                hui.endLoadMore(true, '已经到头了...');
+		                return false;
+		            }
+		            var data = res.split('--hcSplitor--');
+		            for(var i = 0; i < data.length; i++){
+		                var li = document.createElement('li');
+		                li.innerHTML = '<div class="hui-list-text">'+data[i]+'</div>';
+		                hui(li).appendTo('#list');
+		            }
+		            page++;
+		            hui.endLoadMore();
+		        }
+		    );
+		}
+
+		//下拉刷新
+		function refresh(){
+				page = 1;
+				console.log("refresh" + page);
+		    hui.loading('加载中...');
+		    hui.get(
+		        'http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=list1&page=1',
+		        function(res){
+		            hui.closeLoading();
+		            var data = res.split('--hcSplitor--');
+		            var html = '';
+		            for(var i = 0; i < data.length; i++){
+		                html += '<a href="javascript:hui.toast(\'hi.....\');"><div class="hui-list-text">'+data[i]+'</div></a>';
+		            }
+		            hui('#list').html(html);
+		            //结束刷新
+		            hui.endRefresh();
+		            //重置加载更多状态
+		            hui.resetLoadMore();
+								page++;
+		        },
+		        function(){
+		            hui.closeLoading();
+		            hui.upToast('连接服务器失败！');
+		            hui.endRefresh();
+		        }
+		    );
+		}
 
 		// var app = {
 		// // Application Constructor
