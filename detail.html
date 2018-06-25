@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/jquery-weui.min.css">
+  <link rel="stylesheet" href="css/weui.min.css">
+  <link type="text/css" rel="stylesheet" href="hui/css/hui.css" />
+  <style media="screen">
+    #face {
+      width: 80%;
+      height: auto;
+      text-align: center;
+    }
+    .hui-header{
+      background-color: #393D49;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hui-header">
+    <div id="hui-back"></div>
+    <h1>表情详情</h1>
+    <div id="hui-header-menu" class="hui-icons-search"></div>
+  </header>
+  <div id="space"></div>
+  <img id="face" src="" alt="">
+  <a id="add" href="javascript:;" class="weui-btn weui-btn_primary">收藏到连信</a>
+  <script src="js/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="/zx_local_res/jssdk/cordova.js"></script>
+  <script type="text/javascript" src="/zx_local_res/jssdk/zx.js"></script> -->
+  <script type="text/javascript" src="js/jquery-weui.min.js"></script>
+  <script type="text/javascript" src="js/tony.js"></script>
+  <script type="text/javascript" src="hui/js/hui.js"></script>
+  <script type="text/javascript">
+    var src;
+    $(function() {
+      var height = $(".hui-header").outerHeight(true);
+      $("#space").height(height);
+      var url = decodeURI(window.location.href);
+      var argsIndex = url.split("?url=");
+      src = argsIndex[1];
+      $("#face").attr('src', src);
+    });
+    var meuns = ['我的订单', '我的消息', '我的收藏', '退出登录'];
+    var cancel = '关闭菜单';
+    hui('#hui-header-menu').click(function() {
+      hui.actionSheet(meuns, cancel, function(e) {
+        console.log(e.index);
+        hui.toast(e.innerHTML);
+      });
+    });
+    $('#add').click(function() {
+      console.log(src);
+      zx.addExpression(function(result) {
+        if (result == null) {
+          alert("error");
+        } else {
+          alert("ok");
+        }
+      }, src);
+    });
+  </script>
+</body>
+
+</html>
